@@ -10,7 +10,7 @@ import openai
 path = os.path.dirname(__file__)
 
 # Load translations from JSON file
-with open(path+"/../Assets/translations.json") as f:
+with open(path+"/../Assets/translations.json",encoding="utf-8") as f:
     transl = json.load(f)
 
 # Trick to preserve the state of your widgets across pages
@@ -19,7 +19,30 @@ for k, v in st.session_state.items():
 ##
 
 #OpenAI API key
-openai.api_key = st.secrets["openai_api_key"]
+#openai.api_key = st.secrets["openai_api_key"]
+openai.api_key = "your_openai_api_key_here"
+
+
+# Initialize session state variables if they do not exist
+if "context" not in st.session_state:
+    st.session_state.context = ""
+
+if "symptoms" not in st.session_state:
+    st.session_state.symptoms = ""
+
+if "exam" not in st.session_state:
+    st.session_state.exam = ""
+
+if "labresults" not in st.session_state:
+    st.session_state.labresults = ""
+
+if "age" not in st.session_state:
+    st.session_state.age = 0  # Default age to 0 or another appropriate value
+
+if "gender" not in st.session_state:
+    st.session_state.gender = "Unknown"  # Default to "Unknown" or another suitable value
+
+
 
 def openai_create(prompt):
 
