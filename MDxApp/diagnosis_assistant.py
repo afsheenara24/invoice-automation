@@ -9,6 +9,12 @@ import openai
 
 import toml
 
+from dotenv import load_dotenv
+
+load_dotenv()  # Load environment variables from .env file
+
+api_key = os.getenv("OPENAI_API_KEY")
+
 secrets_path = os.path.expanduser("~/.streamlit/credentials.toml")  # Default Streamlit path
 
 
