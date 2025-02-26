@@ -1,34 +1,88 @@
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://medicaldiagnosticassistant.streamlit.app)
 
+# Diagnosis Assistant
 
-Here, we want to make the access to a large knowledge in 
-medical diagnosis available to an as broad as possible community of 
-medical professionals and individuals seeking access to a fast medical diagnosis tool.  
+This is a **Diagnosis Assistant** application built with Streamlit and OpenAI's GPT API. It allows users to input patient symptoms, medical history, and test results to generate a possible diagnosis.
 
-For this, we have developed this app that's using **ChatGPT** 
-(a chatbot recently developed by Open AI) as a proxy to assist you in proposing 
-a quick diagnostic according to a patient's demographics, a recent environmental context, 
-a list of symptoms, recent and relevant observations on the patient's state, and any existing 
-chronic condition(s) followed by indications on any existing treatment(s). 
+---
 
-Patient's demographics, context, symptoms, observations, chronic conditions added to any relevant information 
-can all be entered in plain text in the app. The medical jargon with known abbreviations is fully supported. 
-More information on a patient may help to propose a more precise medical diagnostic. 
+**Installation & Setup**
 
-The use of the app is straightforward with examples shown to the user for guidance. 
+**Prerequisites**
+Make sure you have the following installed:
+- Python 3.8 or later
+- `pip` (Python package manager)
+- OpenAI API key
+- Streamlit
 
-The time response of the app may vary with the traffic of requests, the speed of your internet connection, and 
-finally the disponibility of the OpenAI API. If this happens, try again later. 
+**Clone the Repository**
 
-For any requests, comments, questions on the app, please use the email form accessible from the contact page in the 
-app, or post them right here in the issues. 
+git clone https://github.com/your-repo/diagnosis-assistant.git
+cd diagnosis-assistant
 
-And last, but not the least, we would appreciate that, if you find this app useful, you share it around you by any 
-channel you may prefer. 
+**Create a Virtual Environment (Recommended)**
+It's best to use a virtual environment to manage dependencies:
 
-Finally, support the further developments and maintenances of this app by buying me a coffee. This app uses 
-the ChatGPT AI model through the official API of OpenAI which has a cost. Also, this app is free to use and will remain 
-free to use for all if you support it by buying me a coffee (see the dedicated button below). 
+python -m venv venv  # Create a virtual environment
+source venv/bin/activate  # On macOS/Linux
+venv\Scripts\activate  # On Windows
 
-Thank you very much in advance for making it possible !
+
+**Install Dependencies**
+
+pip install -r requirements.txt
+
+
+**Set Up API Keys**
+Create a `.env` file in the project root and add your OpenAI API key:
+
+OPENAI_API_KEY=your_openai_api_key_here
+
+
+Also, ensure your Streamlit secrets file (`~/.streamlit/secrets.toml` or `C:\Users\your-user\.streamlit\secrets.toml`) is properly configured:
+
+[general]
+openai_api_key = "your_openai_api_key_here"
+openai_api_model = "gpt-4"
+openai_api_temp = 0.7
+openai_api_maxtok = 500
+openai_api_freqp = 0
+openai_api_presp = 0.5
+
+[prompt_canvas]
+prompt_system = "You are a helpful medical assistant."
+prompt_words = ["Patient details: ", "Pregnancy status: ", "Medical history: ", "Symptoms: ", "Examination results: ", "Lab test results: ", "Language: "]
+
+**Running the Application**
+After setting up the environment and dependencies, run the following command:
+
+streamlit run app.py
+
+This will start the Streamlit web application. Open the displayed URL (e.g., `http://localhost:8501`) in your browser.
+
+**Features**
+- Multi-language support
+- Patient data input fields (symptoms, history, lab results, etc.)
+- OpenAI GPT-based diagnosis generation
+- Responsive UI with Streamlit
+- User-friendly interface
+
+**Troubleshooting**
+If you run into issues:
+- Make sure your API keys are correctly set.
+- Ensure all dependencies are installed using `pip list`.
+- Run `streamlit cache clear` if the app is not updating.
+- Check logs for errors when running `streamlit run app.py`.
+
+**Contributing**
+Feel free to fork this repository and submit pull requests with improvements!
+
+**License**
+This project is licensed under the MIT License. See `LICENSE` for details.
+
+---
+
+## Contact
+For any issues or suggestions, please open an issue on GitHub or contact the author.
+
 
