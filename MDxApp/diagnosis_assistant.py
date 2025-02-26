@@ -5,7 +5,61 @@ from streamlit_extras.buy_me_a_coffee import button
 import os
 import json
 
-import openai
+import openai 
+
+import toml
+
+secrets_path = os.path.expanduser("~/.streamlit/credentials.toml")  # Default Streamlit path
+
+
+# Check if file exists
+if not os.path.exists(secrets_path):
+    raise FileNotFoundError(f"Secrets file not found at {secrets_path}")
+
+# Load the TOML file
+with open(secrets_path, "r", encoding="utf-8") as f:
+    secrets = toml.load(f)
+
+
+
+# Manually load secrets from a custom path
+secrets_path = r"C:\Users\afshe\.streamlit\secrets.toml"
+
+if os.path.exists(secrets_path):
+    secrets = toml.load(secrets_path)
+    openai_api_key = secrets["general"]["openai_api_key"]
+else:
+    raise FileNotFoundError(f"Secrets file not found at {secrets_path}")
+
+if "context" not in st.session_state:
+    st.session_state.context = ""
+
+if "symptoms" not in st.session_state:
+    st.session_state.symptoms = ""
+
+import streamlit as st
+
+# Define default values for session state
+session_state_defaults = {
+    "context": "",
+    "symptoms": "",
+    "diagnosis": "",
+    "exam": "",
+    "labresults": "",
+    "age": 0,   #  Default age set to 0
+    "gender": ""  #  Default gender as empty string
+}
+
+
+# Initialize session state variables if they don't exist
+for key, value in session_state_defaults.items():
+    if key not in st.session_state:
+        st.session_state[key] = value
+
+
+for key, value in session_state_defaults.items():
+    if key not in st.session_state:
+        st.session_state[key] = value
 
 path = os.path.dirname(__file__)
 
@@ -13,36 +67,14 @@ path = os.path.dirname(__file__)
 with open(path+"/../Assets/translations.json",encoding="utf-8") as f:
     transl = json.load(f)
 
+
 # Trick to preserve the state of your widgets across pages
 for k, v in st.session_state.items():
     st.session_state[k] = v 
 ##
 
 #OpenAI API key
-#openai.api_key = st.secrets["openai_api_key"]
-openai.api_key = "your_openai_api_key_here"
-
-
-# Initialize session state variables if they do not exist
-if "context" not in st.session_state:
-    st.session_state.context = ""
-
-if "symptoms" not in st.session_state:
-    st.session_state.symptoms = ""
-
-if "exam" not in st.session_state:
-    st.session_state.exam = ""
-
-if "labresults" not in st.session_state:
-    st.session_state.labresults = ""
-
-if "age" not in st.session_state:
-    st.session_state.age = 0  # Default age to 0 or another appropriate value
-
-if "gender" not in st.session_state:
-    st.session_state.gender = "Unknown"  # Default to "Unknown" or another suitable value
-
-
+openai.api_key = "openai_api_key"
 
 def openai_create(prompt):
 
@@ -87,14 +119,7 @@ else:
     #st.sidebar.markdown("<h3 style='text-align: center; color: black;'>{}</h3>".format(transl[st.session_state['lang_tmp']]["language_selection"]), unsafe_allow_html=True)
     lang = st.sidebar.selectbox(transl[st.session_state['lang_tmp']]["language_selection"], options=list(transl.keys()), key='lang_select')
 
-if lang != st.session_state['lang_tmp']:
-    st.session_state['lang_tmp'] = lang
-    st.session_state['lang_changed'] = True
-else:
-    st.session_state['lang_changed'] = False
 
-# Line separator for clarity
-st.sidebar.markdown("""---""")
 
 # Font size and weight for the sidebar
 # Works with streamlit==1.17.0
@@ -120,27 +145,12 @@ st.markdown("""
       }
   </style>""", unsafe_allow_html=True)
 
-# Buy me a coffee - MDxApp support
-button = f"""<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="geonosislaX" data-color="#FFDD00" data-emoji=""  data-font="Cookie" data-text="Donate now" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>"""
-with st.sidebar:
-    st.markdown("<h3 style='text-align: center; color: black;'>{}</h3>".format(transl[lang]['bmc_0']), unsafe_allow_html=True)
-    st.markdown("<h4 style='text-align: left; color: black;'>{}</h4>".format(transl[lang]['bmc_1']), unsafe_allow_html=True)
-    html(button, height=70, width=220)
-    st.markdown("<h4 style='text-align: left; color: black;'>{}</h4>".format(transl[lang]['bmc_2']), unsafe_allow_html=True)
-    qr_name = path+"/../Materials/bmc_qr.png"
-    st.image(qr_name, caption= '', width = 220)
 
-# Use GitHub logo file
-logo_name = path+"/../Materials/MDxApp_logo_v2_256.png"
 
 # Define columns
-t1, t2 = st.columns([1,3], gap="large")
-with t1: 
-    st.image(logo_name, caption= '', width=256)
-with t2:
-    st.header("**{}**".format(transl[lang]['page1_header']))
-    st.write("<p style=\"font-weight: bold; font-size:18px;\">{}</p>".format(transl[lang]['page1_subheader']), 
-                 unsafe_allow_html=True)    
+st.header("**{}**".format(transl[lang]['page1_header']))
+st.write("<p style=\"font-weight: bold; font-size:18px;\">{}</p>".format(transl[lang]['page1_subheader']), 
+                 unsafe_allow_html=True)   
 
 st.markdown("", unsafe_allow_html=True)
 """
@@ -199,12 +209,13 @@ pregnant_list = ["{}".format(transl[lang]['no']), "{}".format(transl[lang]['yes'
 ##
 
 # Gender selector 
+
 with col1:   
     if st.session_state['lang_changed'] and 'gender' in st.session_state:     
         del st.session_state['gender']
     if 'gender' not in st.session_state:
         st.session_state['gender'] = genders_list[0]
-    st.radio("**{}**".format(transl[lang]['gender']), genders_list, key='gender')
+    st.radio("**{}**".format(transl[lang]['gender']), genders_list, key='gender_1')
 # Age selector 
 with col2:
     st.number_input("**{}**".format(transl[lang]['age']), min_value= 0, max_value= 99, step=1, key="age")
@@ -275,10 +286,8 @@ question_prompt = prompt_words[0] + st.session_state.gender + ", " + \
                   prompt_words[3] + report_list[1] + ". " + \
                   prompt_words[4] + report_list[2] + ". " + \
                   prompt_words[5] + report_list[3] + ". " + \
-                  prompt_words[6] + \
-                  prompt_words[7] + \
-                  prompt_words[8] + \
-                  prompt_words[9] + lang + ". "
+                  prompt_words[6] + lang + ". "
+
 
 st.write('')
 submit_button = st.button('**{}**'.format(transl[lang]['submit']), help=":green[**{}**]".format(transl[lang]['submit_help']))

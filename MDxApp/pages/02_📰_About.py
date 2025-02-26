@@ -39,15 +39,6 @@ st.markdown("""
 
 path = os.path.dirname(__file__)
 
-# Buy me a coffee - MDxApp support
-button = f"""<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="geonosislaX" data-color="#FFDD00" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>"""
-with st.sidebar:
-    st.markdown("<h3 style='text-align: center; color: black;'>Let's keep MDxApp free!</h3>", unsafe_allow_html=True)
-    st.markdown("<h4 style='text-align: left; color: black;'>By clicking here:</h4>", unsafe_allow_html=True)
-    html(button, height=70, width=220)
-    st.markdown("<h4 style='text-align: left; color: black;'>Or use this QR code:</h4>", unsafe_allow_html=True)
-    qr_name = path+"/../../Materials/bmc_qr.png"
-    st.image(qr_name, caption= '', width = 220)
 
 st.header("About")
 
@@ -90,23 +81,7 @@ st.markdown(
     > Your contributions, in any form, have allowed me to bring this tool to all.  
     > 
     > I hope this app will positively impact people's lives, and I am grateful for the opportunity to serve the community in this way.  
-    > 
-    > Thank you for your continued support.  
-    > 
-    > Best,  
-    > 
-    > Guillaume Lambard  
-    > AI solutions designer and developer  
-    > *(who developed this tool in his spare time)*
-    > 
-    >  
     """, 
     unsafe_allow_html=True
 )
 
-html(f"""
-    <a class="github-button" href="https://github.com/GLambard/MDxApp" data-show-count="true" aria-label="Follow @GLambard on GitHub">Follow @GLambard</a>
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <a class="twitter-follow-button" href="https://twitter.com/gamlambard">Follow @gamlambard</a>
-    <script async defer src="https://platform.twitter.com/widgets.js"></script>
-    """)
