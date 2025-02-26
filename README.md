@@ -1,12 +1,11 @@
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://medicaldiagnosticassistant.streamlit.app)
 
-# :tv: Welcome to the MDxApp page :hospital:
 
 Here, we want to make the access to a large knowledge in 
 medical diagnosis available to an as broad as possible community of 
 medical professionals and individuals seeking access to a fast medical diagnosis tool.  
 
-For this, we have developed the **MDxApp** that's using **ChatGPT** 
+For this, we have developed this app that's using **ChatGPT** 
 (a chatbot recently developed by Open AI) as a proxy to assist you in proposing 
 a quick diagnostic according to a patient's demographics, a recent environmental context, 
 a list of symptoms, recent and relevant observations on the patient's state, and any existing 
@@ -33,10 +32,3 @@ free to use for all if you support it by buying me a coffee (see the dedicated b
 
 Thank you very much in advance for making it possible !
 
-## Support the app
-
-If you find this app useful, consider supporting it by making a donation.
-
-<a href="https://www.buymeacoffee.com/geonosislaX"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=geonosislaX&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
-
-Thank you for supporting the development and maintenance of this app!
